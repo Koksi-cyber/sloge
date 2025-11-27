@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloge - The Tech-Savvy Ostrich</title>
+    <style>
+        :root {
+            --primary: #FF9900;
+            --secondary: #00D4FF;
+            --dark: #0A0A0A;
+            --light: #FFFFFF;
+            --accent: #FF3366;
+            --gray: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            background-color: rgba(10, 10, 10, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section - FIXED */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1a2e 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px; /* Add padding for fixed header */
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 153, 0, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 40% 80%, rgba(255, 51, 102, 0.1) 0%, transparent 20%);
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(255, 153, 0, 0.8), 0 0 30px rgba(0, 212, 255, 0.6);
+            }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 153, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 153, 0, 0.6);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* About Section */
+        .about {
+            background-color: var(--gray);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 40px;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            padding: 20px 40px;
+            position: relative;
+            width: 50%;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -10px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -10px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-icon {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
+        /* Utility Section */
+        .utility {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1a2e 100%);
+        }
+
+        .utility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .utility-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .utility-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
+
+        .utility-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .utility-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 153, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .utility-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        /* Tech Section */
+        .tech {
+            background-color: var(--gray);
+        }
+
+        .tech-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tech-text {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 40px;
+        }
+
+        .tech-examples {
+            flex: 1;
+            min-width: 300px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .example {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .example:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .example-question {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+
+        .example-answer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .percentage {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .tech-image {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .tech-image img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Roadmap Section */
+        .roadmap {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1a2e 100%);
+        }
+
+        .roadmap-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .roadmap-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transform: translateX(-50%);
+        }
+
+        .roadmap-item {
+            padding: 30px 40px;
+            position: relative;
+            width: 50%;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .roadmap-item:nth-child(odd) {
+            left: 0;
+            padding-right: 70px;
+        }
+
+        .roadmap-item:nth-child(even) {
+            left: 50%;
+            padding-left: 70px;
+        }
+
+        .roadmap-content {
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .roadmap-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .roadmap-item:nth-child(odd) .roadmap-content::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            right: -10px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .roadmap-item:nth-child(even) .roadmap-content::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: -10px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .roadmap-period {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .roadmap-icon {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
+        .roadmap-milestones {
+            list-style: none;
+        }
+
+        .roadmap-milestones li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .roadmap-milestones li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0A0A0A;
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 10px;
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Image Placeholders */
+        .image-placeholder {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-weight: bold;
+            border-radius: 10px;
+            border: 2px dashed var(--accent);
+        }
+
+        .logo-placeholder {
+            width: 40px;
+            height: 40px;
+            font-size: 0.8rem;
+        }
+
+        .hero-placeholder {
+            width: 400px;
+            height: 300px;
+            font-size: 1.5rem;
+        }
+
+        .about-placeholder {
+            width: 100%;
+            height: 300px;
+            font-size: 1.5rem;
+        }
+
+        .tech-placeholder {
+            width: 100%;
+            height: 300px;
+            font-size: 1.5rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero-placeholder {
+                width: 300px;
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 80%;
+                height: calc(100vh - 80px);
+                background-color: var(--dark);
+                transition: right 0.3s ease;
+                z-index: 999;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 40px 20px;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text {
+                margin-bottom: 40px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-text {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 0;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::after {
+                right: auto;
+                left: -10px;
+                border-left: none;
+                border-right: 10px solid rgba(255, 255, 255, 0.05);
+            }
+            
+            .tech-content {
+                flex-direction: column;
+            }
+            
+            .tech-text {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            
+            .roadmap-timeline::before {
+                left: 30px;
+            }
+            
+            .roadmap-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 0;
+            }
+            
+            .roadmap-item:nth-child(even) {
+                left: 0;
+                padding-left: 70px;
+            }
+            
+            .roadmap-item:nth-child(odd) .roadmap-content::after {
+                right: auto;
+                left: -10px;
+                border-left: none;
+                border-right: 10px solid rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .utility-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-placeholder, .tech-placeholder {
+                height: 200px;
+                font-size: 1.2rem;
+            }
+            
+            .hero-placeholder {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <!-- OPTION 1: Use your image -->
+                    <img src="logo.jpg" alt="Sloge Logo">
+                    
+                    <!-- OPTION 2: Use placeholder -->
+                    <!-- <div class="image-placeholder logo-placeholder">LOGO</div> -->
+                    
+                    SLOGE
+                </a>
+                <button class="mobile-menu-btn">☰</button>
+                <nav>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#utility">Utility</a></li>
+                        <li><a href="#tech">Tech</a></li>
+                        <li><a href="#roadmap">Roadmap</a></li>
+                        <li><a href="#" class="cta-button">Buy $SLOGE</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section - FIXED LAYOUT -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>STEP ASIDE GUYS,<br>IT'S MY TIME NOW</h1>
+                    <p>Get ready for a wild ride with Sloge. Our techy memecoin, sloge is the heart and soul of a new memecoin revolution.<br><strong>MEME X TECH</strong></p>
+                    <a href="#" class="cta-button">JOIN THE REVOLUTION</a>
+                </div>
+                <div class="hero-image">
+                    <!-- OPTION 1: Use your image -->
+                    <img src="logo.jpg" alt="Sloge Ostrich">
+                    
+                    <!-- OPTION 2: Use placeholder (visible) -->
+                    <!-- <div class="image-placeholder hero-placeholder">HERO IMAGE<br>sloge/image2.jpg</div> -->
+                    
+                    <!-- OPTION 3: Use online placeholder (works immediately) -->
+                    <!-- <img src="https://placehold.co/400x300/FF9900/FFFFFF?text=SLOGE+HERO" alt="Sloge Hero"> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rest of the sections remain the same -->
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">WHO THE HELL IS SLOGE?</h2>
+            <p style="text-align: center; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">Sloge is the Tech-Savvy Ostrich That Actually Builds Shit.</p>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Sloge doesn't chase trends - he creates them. With a background in crypto since the early days, Sloge has seen it all and is now building the tools the community actually needs.</p>
+                </div>
+                <div class="about-image">
+                    <!-- OPTION 1: Use your image -->
+                    <img src="image4.jpg" alt="Sloge About">
+                    
+                    <!-- OPTION 2: Use placeholder -->
+                    <!-- <div class="image-placeholder about-placeholder">ABOUT IMAGE<br>image3.jpg</div> -->
+                </div>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content fade-in">
+                        <div class="timeline-year"><div class="timeline-icon"></div>2012</div>
+                        <p>Found Satoshi's whitepaper half-buried in the desert. Read it. Got hooked on the tech.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content fade-in">
+                        <div class="timeline-year"><div class="timeline-icon"></div>2017</div>
+                        <p>Laughed at ICOs, wrote his own token in Solidity while everyone else danced.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content fade-in">
+                        <div class="timeline-year"><div class="timeline-icon"></div>2021</div>
+                        <p>Watched friends pay devs $15k and still get rugged.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content fade-in">
+                        <div class="timeline-year"><div class="timeline-icon"></div>2025</div>
+                        <p>Said "fuck it" and built the red button the entire timeline was begging for.<br>Sloge doesn't chase, he ships tools and watches degens do their thing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Utility Section -->
+    <section id="utility" class="utility">
+        <div class="container">
+            <h2 class="section-title">UTILITY</h2>
+            <p style="text-align: center; margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto;">SLOGE ORACLE – "The First Meme-Powered, On-Chain Prediction Engine That Pays You to Be Right"</p>
+            
+            <div class="utility-grid">
+                <div class="utility-card fade-in">
+                    <div class="utility-icon">💬</div>
+                    <h3>Natural Language Markets</h3>
+                    <p>Markets are created using natural language → Sloge's AI instantly turns it into a clean on-chain market (powered by custom Chainlink + LayerZero or UMA-style optimistic oracles).</p>
+                </div>
+                <div class="utility-card fade-in">
+                    <div class="utility-icon">🏆</div>
+                    <h3>Prophet Peckers Leaderboard</h3>
+                    <p>Top 100 most accurate predictors every month get ranked on the legendary "Prophet Peckers" leaderboard and share 5-10% of all monthly fees in $SLOGE.</p>
+                </div>
+                <div class="utility-card fade-in">
+                    <div class="utility-icon">📊</div>
+                    <h3>Alpha Feed</h3>
+                    <p>Real-time "Alpha Feed" – live dashboard of what the smartest $SLOGE holders are currently betting on (this becomes the new Community sentiment indicator).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Section -->
+    <section id="tech" class="tech">
+        <div class="container">
+            <h2 class="section-title">HOW THE TECH WORKS</h2>
+            <p style="text-align: center; margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto;">Natural-language prediction markets on steroids. Type anything → goes on-chain instantly → settle automatically.</p>
+            
+            <div class="tech-content">
+                <div class="tech-text">
+                    <h3>Bet on anything. Get paid when you're right. Outsmart the timeline.</h3>
+                    <p>Why it's addictive: Degens already bet on everything in group chats. Now they get paid when they're right, and the entire market sees their conviction.</p>
+                </div>
+                <div class="tech-examples">
+                    <div class="example fade-in">
+                        <div class="example-question">"Will $PEPE flip $SHIB market cap before July 2026?"</div>
+                        <div class="example-answer">
+                            <span>Current Prediction</span>
+                            <span class="percentage">68% Yes</span>
+                        </div>
+                    </div>
+                    <div class="example fade-in">
+                        <div class="example-question">"Will Elon tweet the word 'ostrich' in 2025?"</div>
+                        <div class="example-answer">
+                            <span>Current Prediction</span>
+                            <span class="percentage">91% Yes</span>
+                        </div>
+                    </div>
+                    <div class="example fade-in">
+                        <div class="example-question">"Will Bitcoin hit 150k before ETH hits 10k?"</div>
+                        <div class="example-answer">
+                            <span>Current Prediction</span>
+                            <span class="percentage">54% BTC</span>
+                        </div>
+                    </div>
+                    <div class="example fade-in">
+                        <div class="example-question">"Will Trump post a meme about $SLOGE before December?"</div>
+                        <div class="example-answer">
+                            <span>Current Prediction</span>
+                            <span class="percentage">42% Yes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tech-image">
+                <!-- OPTION 1: Use your image -->
+                <img src="image4.jpg" alt="Sloge Tech">
+                
+                <!-- OPTION 2: Use placeholder -->
+                <!-- <div class="image-placeholder tech-placeholder">TECH IMAGE<br>image4.jpg</div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="roadmap">
+        <div class="container">
+            <h2 class="section-title">ROADMAP</h2>
+            
+            <div class="roadmap-timeline">
+                <div class="roadmap-item">
+                    <div class="roadmap-content fade-in">
+                        <div class="roadmap-period"><div class="roadmap-icon"></div>Q4 2025 (Now)</div>
+                        <ul class="roadmap-milestones">
+                            <li>Launch $SLOGE + Sloge Oracle v1</li>
+                            <li>First 100 markets live</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-content fade-in">
+                        <div class="roadmap-period"><div class="roadmap-icon"></div>Q1 2026</div>
+                        <ul class="roadmap-milestones">
+                            <li>Cross-chain (Base + Arbitrum + ETH)</li>
+                            <li>Mobile app (create & bet in 5 seconds)</li>
+                            <li>Top 1000 monthly rewards start (5% of fees)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-content fade-in">
+                        <div class="roadmap-period"><div class="roadmap-icon"></div>Q2 2026</div>
+                        <ul class="roadmap-milestones">
+                            <li>AI market suggestions + auto-betting bots for holders</li>
+                            <li>Integration with DexScreener</li>
+                            <li>$1M monthly volume target</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-content fade-in">
+                        <div class="roadmap-period"><div class="roadmap-icon"></div>Q3 2026</div>
+                        <ul class="roadmap-milestones">
+                            <li>Full Chainlink + UMA oracle for 100% trustless settlement</li>
+                            <li>Top 10 predictors get custom Sloge NFT + revenue share</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-content fade-in">
+                        <div class="roadmap-period"><div class="roadmap-icon"></div>2027</div>
+                        <ul class="roadmap-milestones">
+                            <li>Physical ostrich statue with live betting terminal in the desert</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>$SLOGE</h3>
+                    <ul class="footer-links">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#utility">Utility</a></li>
+                        <li><a href="#tech">Technology</a></li>
+                        <li><a href="#roadmap">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Whitepaper</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Community</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Telegram</a></li>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Reddit</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <a href="#" class="social-link">𝕏</a>
+                <a href="#" class="social-link">📱</a>
+                <a href="#" class="social-link">💬</a>
+                <a href="#" class="social-link">🔗</a>
+            </div>
+            
+            <p class="copyright">MADE HEMICOPE © 2025 Sloge. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+
+        // Scroll effect for header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Fade in animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInOnScroll = function() {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', fadeInOnScroll);
+        // Initial check
+        fadeInOnScroll();
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.querySelector('nav').classList.remove('active');
+                }
+            });
+        });
+
+        // Debug info
+        console.log('Hero section image should now be visible!');
+        console.log('If using your own images:');
+        console.log('1. Create folder "sloge" with your images');
+        console.log('2. Uncomment the <img> tags and comment out the placeholders');
+    </script>
+</body>
+</html>
