@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sloge Oracle v1 - Information Markets</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        :root {
+            --primary: #FF9900;
+            --primary-dark: #e68900;
+            --secondary: #00D4FF;
+            --accent: #FF3366;
+            --dark: #0A0A0A;
+            --gray: #1A1A1A;
+            --light: #FFFFFF;
+            --text: #FFFFFF;
+            --text-light: #A0A0A0;
+            --border: #333333;
+            --success: #00D4FF;
+            --warning: #FF9900;
+            --danger: #FF3366;
+            --card-bg: #1A1A1A;
+            --bg: #0A0A0A;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .connect-wallet {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--dark);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 153, 0, 0.3);
+        }
+
+        .connect-wallet:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 153, 0, 0.4);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Markets Section */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .view-all {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .view-all:hover {
+            color: var(--primary);
+        }
+
+        .markets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .market-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+
+        .market-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(255, 153, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        .market-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .market-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            color: var(--text);
+        }
+
+        .market-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-open {
+            background-color: rgba(0, 212, 255, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        .status-closed {
+            background-color: rgba(255, 51, 102, 0.2);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .market-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .market-outcomes {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .outcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .outcome-name {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .outcome-probability {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: var(--border);
+            border-radius: 3px;
+            margin-top: 0.25rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .market-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 0.75rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .category {
+            padding: 0.5rem 1rem;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        .category:hover, .category.active {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--dark);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column a {
+            text-decoration: none;
+            color: var(--text-light);
+            transition: color 0.2s;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+
+        .social-icon:hover {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .markets-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Additional Sloge-inspired styles */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1px;
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 13px;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <span>sloge oracle v1</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Markets</a></li>
+                    <li><a href="#">Portfolio</a></li>
+                    <li><a href="#">Leaderboard</a></li>
+                    <li><a href="#">Docs</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="connect-wallet">Connect Wallet</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Categories -->
+        <div class="categories">
+            <div class="category active">✅ Natural Language Markets</div>
+            <div class="category">✅ Peckers Leaderboard</div>
+            <div class="category">✅ Alpha Feed</div>
+            <div class="category">✅ Sloge Casino</div>
+            <div class="category">✅ Crypto Bets</div>
+            <div class="category">✅ AI Markets</div>
+            <div class="category">✅ Sloge Holder Rewards</div>
+            <div class="category">✅ Trending</div>
+            <div class="category">✅ Earnings</div>
+        </div>
+
+        <!-- Featured Markets -->
+        <section>
+            <div class="section-title">
+                <h2>Featured Markets</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            <div class="markets-grid">
+                <!-- Market Card 1 - Fed Decision -->
+                <div class="market-card">
+                    <div class="market-header">
+                        <h3 class="market-title">Fed decision in December?</h3>
+                        <span class="market-status status-open">Open</span>
+                    </div>
+                    <p class="market-description">Federal Reserve interest rate decision for December meeting</p>
+                    <div class="market-outcomes">
+                        <div class="outcome">
+                            <span class="outcome-name">50+ bps decrease</span>
+                            <span class="outcome-probability">1%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 1%"></div>
+                        </div>
+                        <div class="outcome">
+                            <span class="outcome-name">25 bps decrease</span>
+                            <span class="outcome-probability">86%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 86%"></div>
+                        </div>
+                        <div class="outcome">
+                            <span class="outcome-name">No change</span>
+                            <span class="outcome-probability">13%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 13%"></div>
+                        </div>
+                    </div>
+                    <div class="market-footer">
+                        <span>Volume: $1.2M</span>
+                        <span>Ends: Dec 15, 2024</span>
+                    </div>
+                </div>
+
+                <!-- Market Card 2 - Epstein Files -->
+                <div class="market-card">
+                    <div class="market-header">
+                        <h3 class="market-title">Will Trump release Epstein files by...?</h3>
+                        <span class="market-status status-open">Open</span>
+                    </div>
+                    <p class="market-description">Prediction on Epstein files release timeline</p>
+                    <div class="market-outcomes">
+                        <div class="outcome">
+                            <span class="outcome-name">November 30</span>
+                            <span class="outcome-probability">2%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 2%"></div>
+                        </div>
+                        <div class="outcome">
+                            <span class="outcome-name">December 31</span>
+                            <span class="outcome-probability">70%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <div class="market-footer">
+                        <span>Volume: $890K</span>
+                        <span>Ends: Dec 31, 2024</span>
+                    </div>
+                </div>
+
+                <!-- Market Card 3 -->
+                <div class="market-card">
+                    <div class="market-header">
+                        <h3 class="market-title">Which team will win the 2024 Super Bowl?</h3>
+                        <span class="market-status status-closed">Closed</span>
+                    </div>
+                    <p class="market-description">Predict the winner of Super Bowl LVIII</p>
+                    <div class="market-outcomes">
+                        <div class="outcome">
+                            <span class="outcome-name">Kansas City Chiefs</span>
+                            <span class="outcome-probability">42%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 42%"></div>
+                        </div>
+                        <div class="outcome">
+                            <span class="outcome-name">San Francisco 49ers</span>
+                            <span class="outcome-probability">58%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 58%"></div>
+                        </div>
+                    </div>
+                    <div class="market-footer">
+                        <span>Volume: $950K</span>
+                        <span>Ended: Feb 11, 2024</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Markets -->
+        <section>
+            <div class="section-title">
+                <h2>Trending Markets</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            <div class="markets-grid">
+                <!-- Market Card 4 -->
+                <div class="market-card">
+                    <div class="market-header">
+                        <h3 class="market-title">Will AI pass the Turing Test by 2025?</h3>
+                        <span class="market-status status-open">Open</span>
+                    </div>
+                    <p class="market-description">Predict if an AI system will pass the Turing Test by the end of 2025</p>
+                    <div class="market-outcomes">
+                        <div class="outcome">
+                            <span class="outcome-name">Yes</span>
+                            <span class="outcome-probability">28%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 28%"></div>
+                        </div>
+                        <div class="outcome">
+                            <span class="outcome-name">No</span>
+                            <span class="outcome-probability">72%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 72%"></div>
+                        </div>
+                    </div>
+                    <div class="market-footer">
+                        <span>Volume: $620K</span>
+                        <span>Ends: Dec 31, 2025</span>
+                    </div>
+                </div>
+
+                <!-- Market Card 5 -->
+                <div class="market-card">
+                    <div class="market-header">
+                        <h3 class="market-title">Will there be a manned mission to Mars by 2030?</h3>
+                        <span class="market-status status-open">Open</span>
+                    </div>
+                    <p class="market-description">Predict if humans will land on Mars before 2030</p>
+                    <div class="market-outcomes">
+                        <div class="outcome">
+                            <span class="outcome-name">Yes</span>
+                            <span class="outcome-probability">15%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 15%"></div>
+                        </div>
+                        <div class="outcome">
+                            <span class="outcome-name">No</span>
+                            <span class="outcome-probability">85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="market-footer">
+                        <span>Volume: $410K</span>
+                        <span>Ends: Dec 31, 2029</span>
+                    </div>
+                </div>
+
+                <!-- Market Card 6 -->
+                <div class="market-card">
+                    <div class="market-header">
+                        <h3 class="market-title">Will Ethereum switch to Proof of Stake by June 2023?</h3>
+                        <span class="market-status status-closed">Closed</span>
+                    </div>
+                    <p class="market-description">Predict if Ethereum will complete The Merge by June 2023</p>
+                    <div class="market-outcomes">
+                        <div class="outcome">
+                            <span class="outcome-name">Yes</span>
+                            <span class="outcome-probability">100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <div class="outcome">
+                            <span class="outcome-name">No</span>
+                            <span class="outcome-probability">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="market-footer">
+                        <span>Volume: $3.2M</span>
+                        <span>Ended: Sep 15, 2022</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Sloge Oracle v1</h3>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Community</a></li>
+                    <li><a href="#">Suggest a Market</a></li>
+                    <li><a href="#">API</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Disclaimer</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Connect</h3>
+                <div class="social-links">
+                    <a href="#" class="social-icon">T</a>
+                    <a href="#" class="social-icon">D</a>
+                    <a href="#" class="social-icon">G</a>
+                    <a href="#" class="social-icon">T</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Sloge Oracle v1. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category selection
+            const categories = document.querySelectorAll('.category');
+            categories.forEach(category => {
+                category.addEventListener('click', function() {
+                    categories.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Connect wallet button
+            const connectWalletBtn = document.querySelector('.connect-wallet');
+            connectWalletBtn.addEventListener('click', function() {
+                alert('Wallet connection would be implemented here');
+            });
+
+            // Market card clicks
+            const marketCards = document.querySelectorAll('.market-card');
+            marketCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const title = this.querySelector('.market-title').textContent;
+                    alert(`Navigating to market: ${title}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
