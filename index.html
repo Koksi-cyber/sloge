@@ -83,10 +83,12 @@
         nav ul {
             display: flex;
             list-style: none;
+            align-items: center;
+            gap: 1rem;
         }
 
         nav ul li {
-            margin-left: 30px;
+            margin-left: 0;
         }
 
         nav ul li a {
@@ -114,6 +116,92 @@
 
         nav ul li a:hover::after {
             width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 153, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 153, 0, 0.6);
+        }
+
+        .oracle-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 16px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .oracle-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.6);
+        }
+
+        .oracle-button .coming-soon {
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-top: 2px;
+            opacity: 0.9;
+        }
+
+        /* New smaller Oracle button for mobile header */
+        .header-oracle-button {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 12px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 212, 255, 0.4);
+            text-align: center;
+            white-space: nowrap;
+            font-size: 0.8rem;
+        }
+
+        .header-oracle-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 212, 255, 0.6);
+        }
+
+        .header-oracle-button .coming-soon {
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 1px;
+            opacity: 0.9;
         }
 
         .mobile-menu-btn {
@@ -165,7 +253,7 @@
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             margin-bottom: 20px;
             line-height: 1.2;
             background: linear-gradient(45deg, var(--primary), var(--secondary));
@@ -190,7 +278,7 @@
             margin-bottom: 30px;
         }
 
-        .cta-button {
+        .hero-cta {
             display: inline-block;
             padding: 15px 30px;
             background: linear-gradient(45deg, var(--primary), var(--accent));
@@ -204,12 +292,12 @@
             overflow: hidden;
         }
 
-        .cta-button:hover {
+        .hero-cta:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(255, 153, 0, 0.6);
         }
 
-        .cta-button:active {
+        .hero-cta:active {
             transform: translateY(0);
         }
 
@@ -240,6 +328,7 @@
             }
         }
 
+        /* Rest of the CSS remains the same for other sections */
         /* About Section */
         .about {
             background-color: var(--gray);
@@ -685,74 +774,10 @@
             font-size: 0.9rem;
         }
 
-        /* Image Placeholders */
-        .image-placeholder {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark);
-            font-weight: bold;
-            border-radius: 10px;
-            border: 2px dashed var(--accent);
-        }
-
-        .logo-placeholder {
-            width: 40px;
-            height: 40px;
-            font-size: 0.8rem;
-        }
-
-        .hero-placeholder {
-            width: 400px;
-            height: 300px;
-            font-size: 1.5rem;
-        }
-
-        .about-placeholder {
-            width: 100%;
-            height: 300px;
-            font-size: 1.5rem;
-        }
-
-        .tech-placeholder {
-            width: 100%;
-            height: 300px;
-            font-size: 1.5rem;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         /* Responsive Styles */
         @media (max-width: 992px) {
             .hero h1 {
-                font-size: 3.5rem;
-            }
-            
-            .hero-placeholder {
-                width: 300px;
-                height: 250px;
+                font-size: 3rem;
             }
         }
 
@@ -770,6 +795,7 @@
                 background-color: var(--dark);
                 transition: right 0.3s ease;
                 z-index: 999;
+                padding: 40px 20px;
             }
             
             nav.active {
@@ -778,15 +804,33 @@
             
             nav ul {
                 flex-direction: column;
-                padding: 40px 20px;
+                gap: 1.5rem;
             }
             
             nav ul li {
-                margin: 15px 0;
+                margin: 0;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+            
+            .cta-button, .oracle-button {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+
+            /* Show the smaller Oracle button in header on mobile */
+            .header-oracle-button {
+                display: flex;
             }
             
             .hero h1 {
-                font-size: 2.8rem;
+                font-size: 2.5rem;
             }
             
             .hero p {
@@ -866,7 +910,7 @@
 
         @media (max-width: 576px) {
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             
             .section-title {
@@ -876,16 +920,29 @@
             .utility-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .about-placeholder, .tech-placeholder {
-                height: 200px;
-                font-size: 1.2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-            
-            .hero-placeholder {
-                width: 100%;
-                height: 200px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -895,14 +952,16 @@
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo">
-                    <!-- OPTION 1: Use your image -->
                     <img src="logo.jpg" alt="Sloge Logo">
-                    
-                    <!-- OPTION 2: Use placeholder -->
-                    <!-- <div class="image-placeholder logo-placeholder">LOGO</div> -->
-                    
                     SLOGE
                 </a>
+                
+                <!-- Smaller Oracle button for mobile header -->
+                <a href="polymarket-style-page.html" class="header-oracle-button">
+                    Oracle V1
+                    <span class="coming-soon">soon</span>
+                </a>
+                
                 <button class="mobile-menu-btn">☰</button>
                 <nav>
                     <ul>
@@ -910,7 +969,13 @@
                         <li><a href="#utility">Utility</a></li>
                         <li><a href="#tech">Tech</a></li>
                         <li><a href="#roadmap">Roadmap</a></li>
-                        <li><a href="#" class="cta-button">Buy $SLOGE</a></li>
+                        <li class="nav-buttons">
+                            <a href="#" class="cta-button">Buy $SLOGE</a>
+                            <a href="polymarket-style-page.html" class="oracle-button">
+                                Sloge Oracle V1
+                                <span class="coming-soon">coming soon</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -918,23 +983,16 @@
     </header>
 
     <!-- Hero Section - FIXED LAYOUT -->
-    <section class="hero">
+    <section class="hero" style="margin-top:120px;">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>STEP ASIDE GUYS,<br>IT'S MY TIME NOW</h1>
+                    <h1><br></h1>
                     <p>Get ready for a wild ride with Sloge. Our techy memecoin, sloge is the heart and soul of a new memecoin revolution.<br><strong>MEME X TECH</strong></p>
-                    <a href="#" class="cta-button">JOIN THE REVOLUTION</a>
+                    <a href="#" class="hero-cta">JOIN THE REVOLUTION</a>
                 </div>
                 <div class="hero-image">
-                    <!-- OPTION 1: Use your image -->
                     <img src="logo.jpg" alt="Sloge Ostrich">
-                    
-                    <!-- OPTION 2: Use placeholder (visible) -->
-                    <!-- <div class="image-placeholder hero-placeholder">HERO IMAGE<br>sloge/image2.jpg</div> -->
-                    
-                    <!-- OPTION 3: Use online placeholder (works immediately) -->
-                    <!-- <img src="https://placehold.co/400x300/FF9900/FFFFFF?text=SLOGE+HERO" alt="Sloge Hero"> -->
                 </div>
             </div>
         </div>
@@ -952,11 +1010,7 @@
                     <p>Sloge doesn't chase trends - he creates them. With a background in crypto since the early days, Sloge has seen it all and is now building the tools the community actually needs.</p>
                 </div>
                 <div class="about-image">
-                    <!-- OPTION 1: Use your image -->
                     <img src="image4.jpg" alt="Sloge About">
-                    
-                    <!-- OPTION 2: Use placeholder -->
-                    <!-- <div class="image-placeholder about-placeholder">ABOUT IMAGE<br>image3.jpg</div> -->
                 </div>
             </div>
             
@@ -1059,11 +1113,7 @@
             </div>
             
             <div class="tech-image">
-                <!-- OPTION 1: Use your image -->
                 <img src="image4.jpg" alt="Sloge Tech">
-                
-                <!-- OPTION 2: Use placeholder -->
-                <!-- <div class="image-placeholder tech-placeholder">TECH IMAGE<br>image4.jpg</div> -->
             </div>
         </div>
     </section>
@@ -1164,7 +1214,7 @@
                 <a href="#" class="social-link">🔗</a>
             </div>
             
-            <p class="copyright">2025 Sloge. All rights reserved.</p>
+            <p class="copyright">MADE HEMICOPE © 2025 Sloge. All rights reserved.</p>
         </div>
     </footer>
 
@@ -1222,12 +1272,6 @@
                 }
             });
         });
-
-        // // Debug info
-        // console.log('Hero section image should now be visible!');
-        // console.log('If using your own images:');
-        // console.log('1. Create folder "sloge" with your images');
-        // console.log('2. Uncomment the <img> tags and comment out the placeholders');
     </script>
 </body>
 </html>
